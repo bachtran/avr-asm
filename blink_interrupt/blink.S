@@ -42,6 +42,7 @@ MAIN:
 		SEI
 
 LOOP:
+		SLEEP				; no use doing anything until we have an interrupt
 		SBRC	R1, 7		; is overflow counter under 0x80?
 		RCALL	TOGGLE		; no? then toggle
         RJMP    LOOP
