@@ -19,7 +19,7 @@ clean:
 	rm -f $(PROGNAME).hex $(PROGNAME).bin
 
 $(PROGNAME).bin: $(PROGNAME).S
-	avr-gcc -o $@ $<
+	avr-gcc -mmcu=$(MCU) -o $@ $< -nostdlib
 
 $(PROGNAME).hex: $(PROGNAME).bin
 	avr-objcopy -O ihex -R .eeprom $< $@
