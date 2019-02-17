@@ -24,3 +24,6 @@ $(PROGNAME).bin: $(PROGNAME).S
 $(PROGNAME).hex: $(PROGNAME).bin
 	avr-objcopy -O ihex -R .eeprom $< $@
 
+simulation: sim.c $(PROGNAME).bin
+	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< -o $@
+	
