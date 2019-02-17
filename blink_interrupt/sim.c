@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     // unlike the "blink" example, our MCU sleeps here, so running frequency*5
     // time to get approximately 5 seconds is waaay too much. We have to guess
     // a figure here.
-    for (int i=0; i<2000; i++) {
+    for (int i=0; i<5000; i++) {
         if ((state == cpu_Done) || (state == cpu_Crashed)) {
             break;
         }
