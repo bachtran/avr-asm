@@ -5,8 +5,9 @@
 
 #include <simavr/avr_ioport.h>
 #include <simavr/sim_avr.h>
-#include <simavr/sim_elf.h>
 #include <simavr/sim_vcd_file.h>
+
+#include "../sim_common.h"
 
 /* TODO: fix this simulation
  *
@@ -14,28 +15,14 @@
  * changes *do* happen on hardware).
  */
 
-avr_t * avr = NULL;
 avr_vcd_t vcd_file;
 
 int main(int argc, char *argv[])
 {
-	elf_firmware_t f;
-	const char * fname =  "blink.bin";
-
-	printf("Firmware pathname is %s\n", fname);
-	elf_read_firmware(fname, &f);
-
-	/*printf("firmware %s f=%d mmcu=%s\n", fname, (int)f.frequency, f.mmcu);*/
-
-	avr = avr_make_mcu_by_name("atmega328p");
-	if (!avr) {
-		fprintf(stderr, "%s: AVR '%s' not known\n", argv[0], f.mmcu);
-		exit(1);
-	}
-	avr_init(avr);
-	avr_load_firmware(avr, &f);
-    avr->frequency = 16000000UL;
-
+    avr_t * avr = sim_init("atmega328p", 16000000UL, "blink.S.hex");
+    if (avr == NULL) {
+        return 1;
+    }
 	avr_vcd_init(avr, "gtkwave_output.vcd", &vcd_file, 100000 /* usec */);
 	avr_vcd_add_signal(&vcd_file,
 		avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('B'), 5), 1 /* bit */,

@@ -1,3 +1,5 @@
+.device ATmega328P
+
 ; REGISTER USAGE
 ;
 ; R1: overflow counter. pin status tied to 7th bit

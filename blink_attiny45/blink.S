@@ -1,3 +1,5 @@
+.device ATtiny45
+
 ; I just want to make sure that simavr works well with attiny MCUs...
 ; REGISTER USAGE
 ;

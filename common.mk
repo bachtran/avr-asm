@@ -4,26 +4,24 @@ USBDEV ?= /dev/ttyACM0
 BAUDS ?= 115200
 AVRDUDEMCU ?= $(MCU)
 AVRDUDEARGS ?= -F -V -c arduino -P $(USBDEV) -b $(BAUDS)
+TARGET = $(PROGNAME).S.hex
 
 # Rules
 
 .PHONY: send clean
 
-all: $(PROGNAME).hex
+all: $(TARGET)
 	@echo Done!
 
-send: $(PROGNAME).hex
-	avrdude $(AVRDUDEARGS) -p $(AVRDUDEMCU) -U flash:w:$(PROGNAME).hex
+send: $(TARGET)
+	avrdude $(AVRDUDEARGS) -p $(AVRDUDEMCU) -U flash:w:$<
 
 clean:
-	rm -f $(PROGNAME).hex $(PROGNAME).bin
+	rm -f $(TARGET) $(PROGNAME).S.eep.hex $(PROGNAME).S.cof $(PROGNAME).S.obj simulation
 
-$(PROGNAME).bin: $(PROGNAME).S
-	avr-gcc -mmcu=$(MCU) -o $@ $< -nostdlib
+$(TARGET): $(PROGNAME).S
+	avra $<
 
-$(PROGNAME).hex: $(PROGNAME).bin
-	avr-objcopy -O ihex -R .eeprom $< $@
-
-simulation: sim.c $(PROGNAME).bin
-	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< -o $@
+simulation: sim.c ../sim_common.c $(TARGET)
+	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< ../sim_common.c -o $@
 	

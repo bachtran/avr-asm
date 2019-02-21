@@ -1,3 +1,4 @@
+.device ATmega328P
 ; SHIFT REGISTER CONTROLLER
 ;
 ; This program drives a CD74AC164 to display digits on a 7-segment display.
@@ -77,7 +78,7 @@ LOOP:
 	; update digit
 	INC	R17
 	CPI	R17, 10
-	BRNE	.+2		; if == 10, clear to 0
+	BRNE	LOOP		; if == 10, clear to 0
 	CLR	R17
 
 	RJMP    LOOP
@@ -92,8 +93,8 @@ OVF:
 ; Load the digit selected in R17 into R20
 LDDIGIT:
 	; load DIGITS' address into Z
-	LDI	R31, hi8(DIGITS)
-	LDI	R30, lo8(DIGITS)
+	LDI	R31, high(DIGITS)
+	LDI	R30, low(DIGITS)
 	CLR	R16		; we need a R with 0 in it for ADC below
 	ADD	R30, R17	; Add selected digit offset
 	ADC	R31, R16	; in case we carried earlier
@@ -121,7 +122,7 @@ TOGCP:
 	RET
 
 ; segment masks for digits from 0 to 9
-DIGITS: .byte \
+DIGITS: .DB \
 	0b00000010, \
 	0b01001111, \
 	0b00010001, \
