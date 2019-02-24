@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     }
 	avr_vcd_init(avr, "gtkwave_output.vcd", &vcd_file, 100000 /* usec */);
 	avr_vcd_add_signal(&vcd_file,
-		avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('B'), 5), 1 /* bit */,
-		"PORTB5");
+		avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('B'), 0), 1 /* bit */,
+		"PORTB0");
 	printf( "\nLaunching:\n");
 
     avr_vcd_start(&vcd_file);
