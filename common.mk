@@ -8,7 +8,7 @@ ifeq ($(AVRDUDEMCU),t45)
 else
 	AVRDUDEARGS ?= -F -V -c arduino -P $(USBDEV) -b $(BAUDS)
 endif
-TARGET = $(PROGNAME).S.hex
+TARGET = $(PROGNAME).hex
 
 # Rules
 
@@ -21,10 +21,10 @@ send: $(TARGET)
 	avrdude $(AVRDUDEARGS) -p $(AVRDUDEMCU) -U flash:w:$<
 
 clean:
-	rm -f $(TARGET) $(PROGNAME).S.eep.hex $(PROGNAME).S.cof $(PROGNAME).S.obj simulation
+	rm -f $(TARGET) $(PROGNAME).S.eep.hex $(PROGNAME).S.obj simulation
 
 $(TARGET): $(PROGNAME).S
-	avra -I /usr/include/avr $<
+	avra -o $@ $<
 
 simulation: sim.c ../sim_common.c $(TARGET)
 	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< ../sim_common.c -o $@

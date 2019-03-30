@@ -14,7 +14,7 @@ avr_vcd_t vcd_file;
 
 int main(int argc, char *argv[])
 {
-    avr_t * avr = sim_init("attiny45", 1000000UL, "blink.S.hex");
+    avr_t * avr = sim_init("attiny45", 1000000UL, "blink.hex");
     if (avr == NULL) {
         return 1;
     }
