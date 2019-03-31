@@ -24,7 +24,7 @@ clean:
 	rm -f $(TARGET) $(PROGNAME).S.eep.hex $(PROGNAME).S.obj simulation
 
 $(TARGET): $(PROGNAME).S
-	avra -o $@ $<
+	avra $(FLAGS) -o $@ $<
 
 simulation: sim.c ../sim_common.c $(TARGET)
 	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< ../sim_common.c -o $@
