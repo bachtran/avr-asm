@@ -1,4 +1,4 @@
 PROGNAME = blink
-AVRDUDEMCU = t45
+AVRDUDEMCU = t48
 include ../common.mk
 

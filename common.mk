@@ -1,14 +1,14 @@
-MCU ?= atmega328p
+AVRDUDEMCU ?= atmega328p
 
 USBDEV ?= /dev/ttyACM0
 BAUDS ?= 115200
-AVRDUDEMCU ?= $(MCU)
-ifeq ($(AVRDUDEMCU),t45)
-	AVRDUDEARGS ?= -c usbtiny -P usb 
-else
+ifeq ($(AVRDUDEMCU),atmega328p)
 	AVRDUDEARGS ?= -F -V -c arduino -P $(USBDEV) -b $(BAUDS)
+else
+	AVRDUDEARGS ?= -c usbtiny -P usb 
 endif
 TARGET = $(PROGNAME).hex
+AVRA = avra
 
 # Rules
 
@@ -24,7 +24,7 @@ clean:
 	rm -f $(TARGET) $(PROGNAME).S.eep.hex $(PROGNAME).S.obj simulation
 
 $(TARGET): $(PROGNAME).S
-	avra $(FLAGS) -o $@ $<
+	$(AVRA) $(FLAGS) -o $@ $<
 
 simulation: sim.c ../sim_common.c $(TARGET)
 	$(CC) $(LDFLAGS) -lsimavr -lm -lelf $< ../sim_common.c -o $@
