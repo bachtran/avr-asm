@@ -3,3 +3,4 @@
 *.cof
 simulation
 *.vcd
+/spi/driver
