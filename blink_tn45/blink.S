@@ -6,7 +6,7 @@
 
 .include "tn45def.inc"
 
-	RJMP    MAIN
+	;RJMP    MAIN
 
 MAIN:
 	LDI	R16, low(RAMEND)
@@ -14,8 +14,8 @@ MAIN:
         LDI	R16, high(RAMEND)
 	OUT	SPH, R16
 
-        SBI     DDRB, DDB0
-        CBI     PORTB, PORTB0
+        ;SBI     DDRB, DDB0
+        ;CBI     PORTB, PORTB0
 
 	; To have a blinking delay that's visible, we have to prescale a lot.
 	; The maximum prescaler is 1024, which makes our TCNT0 increase
@@ -37,7 +37,7 @@ TOGGLE:
 	LDI	R16, 1 << TOV0
 	OUT	TIFR, R16
 	INC	R1
-        CBI     PORTB, PORTB0
+        ;CBI     PORTB, PORTB0
         SBRS    R1, 1		; if LED is on
-        SBI     PORTB, PORTB0
+        ;SBI     PORTB, PORTB0
 	RET
